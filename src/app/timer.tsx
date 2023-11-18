@@ -1,47 +1,45 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 export const CountdownTimer = ({ targetTime }: {targetTime: number}) => {
-  const [currentTime, setCurrentTime] = useState(targetTime);
-  const [timeLeft, setTimeLeft] = useState({
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  const currentTime = useRef(targetTime);
+
 
   const calculateTimeLeft = () => {
     return {
-      hours: Math.floor((currentTime / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor((currentTime / 1000 / 60) % 60),
-      seconds: Math.floor((currentTime / 1000) % 60),
+      hours: Math.floor((currentTime.current / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((currentTime.current / 1000 / 60) % 60),
+      seconds: Math.floor((currentTime.current / 1000) % 60),
     };
   };
 
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
+
+  const addLeadingZeros = (value: number) => {
+    let valueString = String(value);
+    while (valueString.length < 2) {
+      valueString = `0${valueString}`;
+    }
+    return valueString;
+  }
+
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timer = setInterval(() => {
+      if (currentTime.current <= 0) {
+        clearInterval(timer);
+        return;
+      }
+      currentTime.current -= 1000;
       setTimeLeft(calculateTimeLeft());
-      setCurrentTime(currentTime - 1000);
     }, 1000);
 
-    return () => clearTimeout(timer);
-  }, [currentTime])
-
-  const timerComponents = [];
-
-  Object.keys(timeLeft).forEach((interval) => {
-    if (!timeLeft[interval]) return;
-
-    timerComponents.push(
-      <span>
-        {timeLeft[interval]} {interval}{" "}
-      </span>
-    );
-  });
+    return () => clearInterval(timer);
+  }, [])
 
   return (
     <div>
-      {timerComponents.length ? timerComponents : <span>Time's up!</span>}
+      {`${addLeadingZeros(timeLeft.hours)} : ${addLeadingZeros(timeLeft.minutes)} : ${addLeadingZeros(timeLeft.seconds)}`}
     </div>
   );
 };

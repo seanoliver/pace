@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div>
       <h1>Hello World</h1>
-      <CountdownTimer targetTime={100000000} />
+      <CountdownTimer targetTime={10*1000} />
     </div>
   )
 }
