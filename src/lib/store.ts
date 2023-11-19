@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface TimerStore {
+export interface TimerStore {
   targetTime: number;
   isActive: boolean;
   isPaused: boolean;
@@ -12,7 +12,7 @@ interface TimerStore {
   reset: (initialTime: number) => void;
 }
 
-const useTimerStore = create((set):TimerStore => ({
+export const useTimerStore = create((set):TimerStore => ({
   targetTime: 0,
   isActive: false,
   isPaused: false,

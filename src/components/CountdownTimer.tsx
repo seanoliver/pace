@@ -1,10 +1,31 @@
 'use client'
 
+import { TimerStore, useTimerStore } from '@/lib/store';
 import React, { useState, useEffect, useRef } from 'react';
 
-export const CountdownTimer = ({ targetTime }: {targetTime: number}) => {
-  const currentTime = useRef(targetTime);
+export const CountdownTimer = () => {
+  const {
+    targetTime,
+    isActive,
+    isPaused,
+    start,
+    pause,
+    stop,
+    reset
+  } = useTimerStore((state: unknown) => {
+    const timerState = state as TimerStore;
+    return {
+      targetTime: timerState.targetTime,
+      isActive: timerState.isActive,
+      isPaused: timerState.isPaused,
+      start: timerState.start,
+      pause: timerState.pause,
+      stop: timerState.stop,
+      reset: timerState.reset
+    };
+  });
 
+  const currentTime = useRef(targetTime);
 
   const calculateTimeLeft = () => {
     return {
@@ -37,9 +58,18 @@ export const CountdownTimer = ({ targetTime }: {targetTime: number}) => {
     return () => clearInterval(timer);
   }, [])
 
+  calculateTimeLeft();
+
   return (
-    <div>
-      {`${addLeadingZeros(timeLeft.hours)} : ${addLeadingZeros(timeLeft.minutes)} : ${addLeadingZeros(timeLeft.seconds)}`}
+    <div className='flex flex-col'>
+      <div>
+        {`${addLeadingZeros(timeLeft.hours)} : ${addLeadingZeros(timeLeft.minutes)} : ${addLeadingZeros(timeLeft.seconds)}`}
+      </div>
+      <div className='flex gap-4'>
+        <button onClick={start}>Start</button>
+        <button onClick={pause}>Pause</button>
+        <button onClick={stop}>Stop</button>
+      </div>
     </div>
   );
 };
