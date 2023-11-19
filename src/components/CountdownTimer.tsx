@@ -2,10 +2,12 @@
 
 import { TimerStore, useTimerStore } from '@/lib/store';
 import React, { useState, useEffect, useRef } from 'react';
+import TimeSetter from './TimeSetter';
 
 export const CountdownTimer = () => {
   const {
     targetTime,
+    setTargetTime,
     isActive,
     isPaused,
     start,
@@ -21,7 +23,8 @@ export const CountdownTimer = () => {
       start: timerState.start,
       pause: timerState.pause,
       stop: timerState.stop,
-      reset: timerState.reset
+      reset: timerState.reset,
+      setTargetTime: timerState.setTargetTime
     };
   });
 
@@ -60,6 +63,8 @@ export const CountdownTimer = () => {
 
   calculateTimeLeft();
 
+  const inputClasses = 'w-10 dark:bg-black text-center border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
+
   return (
     <div className='flex flex-col'>
       <div>
@@ -69,6 +74,9 @@ export const CountdownTimer = () => {
         <button onClick={start}>Start</button>
         <button onClick={pause}>Pause</button>
         <button onClick={stop}>Stop</button>
+      </div>
+      <div>
+        <TimeSetter onTimeSet={setTargetTime} />
       </div>
     </div>
   );
