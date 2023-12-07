@@ -3,6 +3,7 @@
 import { TimerStore, useTimerStore } from '@/lib/store';
 import React, { useState, useEffect, useRef } from 'react';
 import TimeSetter from './TimeSetter';
+import { TASKS } from '@/lib/constants';
 
 export const CountdownTimer = () => {
   const {
@@ -47,6 +48,8 @@ export const CountdownTimer = () => {
     }
     return valueString;
   }
+
+  const totalTime = TASKS.reduce((total, task) => total += task.duration, 0)
 
   useEffect(() => {
     const timer = setInterval(() => {

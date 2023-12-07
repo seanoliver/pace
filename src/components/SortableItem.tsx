@@ -2,7 +2,6 @@ import { Task } from '@/lib/types';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useEffect, useRef, useState } from 'react';
-import { Input } from './ui/input';
 
 export default function SortableItem({ task, id }: { task: Task; id: number }) {
 	const [isEditing, setIsEditing] = useState(false);
@@ -10,6 +9,7 @@ export default function SortableItem({ task, id }: { task: Task; id: number }) {
 	const [editableText, setEditableText] = useState(task.title);
 
 	const dragTimeoutRef = useRef<NodeJS.Timeout>();
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	const dragDelay = 200;
 	let dragTimeout: NodeJS.Timeout;
@@ -24,12 +24,10 @@ export default function SortableItem({ task, id }: { task: Task; id: number }) {
 
 	const handleBlur = () => {
 		setIsEditing(false);
-    task.title = editableText; // TODO: Update in DB
-
+		task.title = editableText; // TODO: Update in DB
 	};
 
 	const handleTextClick = () => {
-		console.log('click');
 		if (!isDragging) {
 			setIsEditing(true);
 		}
@@ -54,6 +52,14 @@ export default function SortableItem({ task, id }: { task: Task; id: number }) {
 		setEditableText(event.target.value);
 	};
 
+  const handleDurationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    task.duration = parseInt(event.target.value, 10);
+  };
+
+  const toggleCompleted = () => {
+    task.completed = !task.completed;
+  }
+
 	useEffect(() => {
 		return () => {
 			if (dragTimeoutRef.current) {
@@ -61,6 +67,19 @@ export default function SortableItem({ task, id }: { task: Task; id: number }) {
 			}
 		};
 	}, []);
+
+	useEffect(() => {
+		if (isEditing) {
+			// Focus on the next tick
+			setTimeout(() => inputRef.current?.focus(), 0);
+		}
+	}, [isEditing]);
+
+	useEffect(() => {
+		if (isEditing) {
+			inputRef.current?.focus();
+		}
+	}, [isEditing]);
 
 	return (
 		<div
@@ -72,16 +91,18 @@ export default function SortableItem({ task, id }: { task: Task; id: number }) {
 			{...(isEditing ? {} : { ...attributes, ...listeners })}>
 			<input
 				type='checkbox'
+        onClick={toggleCompleted}
 				checked={task.completed}
 			/>
 			<div className='flex-grow'>
 				{isEditing ? (
-					<Input
+					<input
+						ref={inputRef}
 						type='text'
 						value={editableText}
 						onChange={handleTextChange}
 						onBlur={handleBlur}
-						autoFocus
+						className='w-full font-bold  bg-transparent outline-none border-2'
 					/>
 				) : (
 					<div
@@ -91,7 +112,19 @@ export default function SortableItem({ task, id }: { task: Task; id: number }) {
 					</div>
 				)}
 			</div>
-			<div className='w-16 text-center'>{task.duration} min</div>
+			<div className='w-16 text-center'>
+				{isEditing ? (
+					<input
+						type='text'
+						value={task.duration}
+						onChange={handleDurationChange}
+						onBlur={handleBlur}
+						className='w-full text-center bg-transparent outline-none border-2'
+					/>
+				) : (
+					`${task.duration} min`
+				)}
+			</div>
 		</div>
 	);
 }

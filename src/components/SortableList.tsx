@@ -17,19 +17,22 @@ import {
 } from '@dnd-kit/sortable';
 import SortableItem from './SortableItem';
 import { Task } from '@/lib/types';
-import { TASKS } from '@/lib/constants';
+import { TimerStore, useTimerStore } from '@/lib/store';
 
 export default function SortableList() {
-	const [tasks, setTasks] = useState<Task[]>(TASKS);
+
+  const [tasks, setTasks] = useTimerStore((state: unknown) => {
+    const timerState = state as TimerStore;
+    return [timerState.tasks, timerState.setTasks];
+  });
 
 	const handleDragEnd = (event: any) => {
 		const { active, over } = event;
 		if (over && active.id !== over.id) {
-			setTasks(tasks => {
-				const oldIndex = tasks.findIndex(task => task.id === active.id);
-				const newIndex = tasks.findIndex(task => task.id === over.id);
-				return arrayMove(tasks, oldIndex, newIndex);
-			});
+			const oldIndex = tasks.findIndex(task => task.id === active.id);
+			const newIndex = tasks.findIndex(task => task.id === over.id);
+			const newTasks = arrayMove(tasks, oldIndex, newIndex);
+			setTasks(newTasks);
 		}
 	};
 
