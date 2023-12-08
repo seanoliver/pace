@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from "@/components/ui/use-toast"
+import { createBrowserClient } from '@supabase/ssr';
 
 const signUpFormSchema = z
 	.object({
@@ -33,6 +34,11 @@ const signUpFormSchema = z
 export default function SignUpForm() {
   const { toast } = useToast()
 
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  );
+
 	const signUpForm = useForm<z.infer<typeof signUpFormSchema>>({
 		resolver: zodResolver(signUpFormSchema),
 		defaultValues: {
@@ -42,13 +48,17 @@ export default function SignUpForm() {
 		},
 	});
 
-	function onSubmit(data: z.infer<typeof signUpFormSchema>) {
-		console.log('data', data);
-    toast({
-      title: "Account created.",
-      description: `You've submitted this information\n\n ${JSON.stringify(data, null, 2)}`,
-      variant: 'default'
+	async function onSubmit(data: z.infer<typeof signUpFormSchema>) {
+    const { error } = await supabase.auth.signUp({
+      email: data.email,
+      password: data.password
     })
+
+    if (error) {
+      toast({ title: "Error", description: error.message, variant: 'destructive' })
+    } else {
+      toast({ title: "Success", description: "Account created" })
+    }
 	}
 
 	const renderFormField = (
