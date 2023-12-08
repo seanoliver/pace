@@ -12,7 +12,6 @@ export default function SortableItem({ task, id }: { task: Task; id: number }) {
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const dragDelay = 200;
-	let dragTimeout: NodeJS.Timeout;
 
 	const { attributes, listeners, setNodeRef, transform, transition } =
 		useSortable({ id });
@@ -22,6 +21,7 @@ export default function SortableItem({ task, id }: { task: Task; id: number }) {
 		transition,
 	};
 
+  // TODO: Trigger blur on enter
 	const handleBlur = () => {
 		setIsEditing(false);
 		task.title = editableText; // TODO: Update in DB
@@ -92,7 +92,7 @@ export default function SortableItem({ task, id }: { task: Task; id: number }) {
 			<input
 				type='checkbox'
         onClick={toggleCompleted}
-				checked={task.completed}
+				// checked={task.completed}
 			/>
 			<div className='flex-grow'>
 				{isEditing ? (
@@ -113,6 +113,7 @@ export default function SortableItem({ task, id }: { task: Task; id: number }) {
 				)}
 			</div>
 			<div className='w-16 text-center'>
+        {/* TODO: Enable duration editing. */}
 				{isEditing ? (
 					<input
 						type='text'

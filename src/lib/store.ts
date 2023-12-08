@@ -9,7 +9,7 @@ export interface TimerStore {
   tasks: Task[];
 
   setTargetTime: (targetTime: number) => void;
-  setTasks: (taskList: Task[]) => void;
+  setTasks: (tasks: Task[]) => void;
   start: () => void;
   pause: () => void;
   stop: () => void;
@@ -23,7 +23,7 @@ export const useTimerStore = create((set):TimerStore => ({
   tasks: TASKS,
 
   setTargetTime: (targetTime: number) => set({ targetTime }),
-  setTasks: (taskList: Task[]) => set({ taskList }),
+  setTasks: (tasks: Task[]) => set({ tasks }),
   start: () => set({ isActive: true, isPaused: false }),
   pause: () => set((state:TimerStore) => ({ isPaused: !state.isPaused })),
   stop: () => set({ targetTime: 0, isActive: false, isPaused: false }),

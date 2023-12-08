@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	DndContext,
 	closestCenter,
@@ -15,16 +15,15 @@ import {
 	sortableKeyboardCoordinates,
 	verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import SortableItem from './SortableItem';
+import SortableItem from './sortable-item';
 import { Task } from '@/lib/types';
 import { TimerStore, useTimerStore } from '@/lib/store';
 
 export default function SortableList() {
-
-  const [tasks, setTasks] = useTimerStore((state: unknown) => {
-    const timerState = state as TimerStore;
-    return [timerState.tasks, timerState.setTasks];
-  });
+	const [tasks, setTasks] = useTimerStore((state: unknown) => {
+		const timerState = state as TimerStore;
+		return [timerState.tasks, timerState.setTasks];
+	});
 
 	const handleDragEnd = (event: any) => {
 		const { active, over } = event;

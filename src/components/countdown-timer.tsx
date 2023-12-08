@@ -2,7 +2,7 @@
 
 import { TimerStore, useTimerStore } from '@/lib/store';
 import React, { useState, useEffect, useRef } from 'react';
-import TimeSetter from './TimeSetter';
+import TimeSetter from './time-setter';
 import { TASKS } from '@/lib/constants';
 
 export const CountdownTimer = () => {
