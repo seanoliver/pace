@@ -17,37 +17,29 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-const signUpFormSchema = z
+const signInFormSchema = z
 	.object({
 		email: z.string().email({ message: 'Invalid email address' }),
 		password: z
 			.string()
 			.min(8, { message: 'Password must be at least 8 characters' }),
-		confirmPassword: z
-			.string()
-			.min(8, { message: 'Password must be at least 8 characters' }),
 	})
-	.refine(data => data.password === data.confirmPassword, {
-		message: 'Passwords do not match',
-		path: ['confirmPassword'],
-	});
 
-export default function SignUpForm() {
+export default function SignInForm() {
   const { toast } = useToast()
-  const router = useRouter();
+  const router = useRouter()
   const supabase = useSupabaseBrowserClient();
 
-	const signUpForm = useForm<z.infer<typeof signUpFormSchema>>({
-		resolver: zodResolver(signUpFormSchema),
+	const signInForm = useForm<z.infer<typeof signInFormSchema>>({
+		resolver: zodResolver(signInFormSchema),
 		defaultValues: {
 			email: '',
 			password: '',
-			confirmPassword: '',
 		},
 	});
 
-	async function onSubmit(data: z.infer<typeof signUpFormSchema>) {
-    const { data: userData, error } = await supabase.auth.signUp({
+	async function onSubmit(data: z.infer<typeof signInFormSchema>) {
+    const { data: userData, error } = await supabase.auth.signInWithPassword({
       email: data.email,
       password: data.password
     })
@@ -55,18 +47,18 @@ export default function SignUpForm() {
     if (error) {
       toast({ title: "Error", description: error.message, variant: 'destructive' })
     } else {
-      router.push('/')
+      router.push('/') // TODO: Redirect to last page
     }
 	}
 
 	const renderFormField = (
-		name: keyof z.infer<typeof signUpFormSchema>,
+		name: keyof z.infer<typeof signInFormSchema>,
 		label: string,
 		type: string
 	) => {
 		return (
 			<FormField
-				control={signUpForm.control}
+				control={signInForm.control}
 				name={name}
 				render={({ field }) => (
 					<FormItem>
@@ -86,19 +78,18 @@ export default function SignUpForm() {
 
 	return (
 		<div className='w-1/3'>
-			<Form {...signUpForm}>
+			<Form {...signInForm}>
 				<form
-					onSubmit={signUpForm.handleSubmit(onSubmit)}
+					onSubmit={signInForm.handleSubmit(onSubmit)}
           onError={errors => toast({ title: "Error", description: JSON.stringify(errors, null, 2), variant: 'destructive' })}
 					className='space-y-8'>
 					{renderFormField('email', 'Email', 'email')}
 					{renderFormField('password', 'Password', 'password')}
-					{renderFormField('confirmPassword', 'Confirm Password', 'password')}
 					<Button type='submit'>Submit</Button>
 				</form>
 			</Form>
       <div className='flex justify-center'>
-        <Button variant={'link'} onClick={() => router.push('/sign-in')}>Sign In</Button>
+        <Button variant={'link'} onClick={() => router.push('/sign-up')}>Sign Up</Button>
       </div>
 		</div>
 	);
