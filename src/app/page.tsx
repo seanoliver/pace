@@ -3,7 +3,7 @@ import TaskList from '@/components/sortable-list';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { Toaster } from '@/components/ui/toaster';
-import { useSupabaseServerClient } from '@/lib/hooks/supabase';
+import { useSupabaseServerClient } from '@/lib/hooks/use-supabase';
 import { setUser } from '@/lib/store';
 import Nav from '@/components/nav';
 
