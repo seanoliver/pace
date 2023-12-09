@@ -1,30 +1,37 @@
 import CountdownTimer from '@/components/countdown-timer';
 import TaskList from '@/components/sortable-list';
-import { createServerClient, type CookieOptions } from '@supabase/ssr'
-import { cookies } from 'next/headers'
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { Toaster } from '@/components/ui/toaster';
 import { useSupabaseServerClient } from '@/lib/hooks/supabase';
+import { TimerStore, useTimerStore } from '@/lib/store';
+import { useEffect } from 'react';
+
 
 export default async function Home() {
-  const cookieStore = cookies()
-  const supabase = useSupabaseServerClient(cookieStore)
+	const cookieStore = cookies();
+	const supabase = useSupabaseServerClient(cookieStore);
+  const setUser = useTimerStore(state => (state as TimerStore).setUser);
 
-  const {
-    data: { user }
-  } = await supabase.auth.getUser()
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
 
-  if (!user) {
-    redirect('/sign-up')
-  }
+      if (!user) {
+        redirect('/sign-up');
+      } else {
+        setUser(user)
+      }
+    };
 
-  console.log('user', user)
+    fetchUser();
+  }, [])
 
 	return (
 		<div className='flex w-full h-full flex-col gap-4'>
 			<CountdownTimer />
 			<TaskList />
-      <Toaster />
+			<Toaster />
 		</div>
 	);
 }
