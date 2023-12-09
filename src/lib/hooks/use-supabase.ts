@@ -10,9 +10,16 @@ if (process.env.NODE_ENV === 'development') {
 	supabaseUrl = 'http://127.0.0.1:54321';
 }
 
+/**
+ * Creates a browser client for Supabase.
+ */
 export const useSupabaseBrowserClient = () =>
 	createBrowserClient(supabaseUrl!, supabaseAnonKey!);
 
+/**
+  * Creates a server client for Supabase.
+  * @param {Object} cookieStore
+  */
 export const useSupabaseServerClient = (
 	cookieStore: ReturnType<typeof cookies>
 ) => {
@@ -25,7 +32,12 @@ export const useSupabaseServerClient = (
 	});
 };
 
-export const useSupabase = () => {
+/**
+ * Fetches the current user from the session and subscribes to changes
+ * to the auth state (login, logout).
+ * @returns {Object} { user, loading }
+ */
+export const useSupabase = (): { user: User | null; loading: boolean } => {
 	const [user, setUser] = useState<User | null>(null);
 	const [loading, setLoading] = useState(true);
 	const supabase = useSupabaseBrowserClient();

@@ -1,10 +1,14 @@
+'use client';
+
+import { useSupabase } from '@/lib/hooks/use-supabase';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 const withAuth = (ProtectedComponent: React.FC<any>) => {
+  console.log('withAuth');
 	return function WithAuthComponent(props: React.PropsWithChildren<{}>) {
 		const router = useRouter();
-		const { user, loading } = useAuth(); // TODO: Define this hook
+		const { user, loading } = useSupabase(); // TODO: Define this hook
 
 		useEffect(() => {
 			if (!loading && !user) {
