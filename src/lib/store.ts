@@ -34,3 +34,5 @@ export const useTimerStore = create((set):TimerStore => ({
   stop: () => set({ targetTime: 0, isActive: false, isPaused: false }),
   reset: (initialTime) => set({ targetTime: initialTime, isActive: false, isPaused: false }),
 }));
+
+export const setUser = (user: User) => useTimerStore.setState({ user });

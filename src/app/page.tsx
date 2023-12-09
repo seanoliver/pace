@@ -4,31 +4,27 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { Toaster } from '@/components/ui/toaster';
 import { useSupabaseServerClient } from '@/lib/hooks/supabase';
-import { TimerStore, useTimerStore } from '@/lib/store';
-import { useEffect } from 'react';
-
+import { setUser } from '@/lib/store';
+import Nav from '@/components/nav';
 
 export default async function Home() {
 	const cookieStore = cookies();
 	const supabase = useSupabaseServerClient(cookieStore);
-  const setUser = useTimerStore(state => (state as TimerStore).setUser);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+	const {
+		data: { user },
+	} = await supabase.auth.getUser();
 
-      if (!user) {
-        redirect('/sign-up');
-      } else {
-        setUser(user)
-      }
-    };
-
-    fetchUser();
-  }, [])
+  console.log(user);
+	if (!user) {
+		redirect('/sign-up');
+	} else {
+		setUser(user);
+	}
 
 	return (
 		<div className='flex w-full h-full flex-col gap-4'>
+      <Nav />
 			<CountdownTimer />
 			<TaskList />
 			<Toaster />
