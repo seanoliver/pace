@@ -8,7 +8,7 @@ const withAuth = (ProtectedComponent: React.FC<any>) => {
   console.log('withAuth');
 	return function WithAuthComponent(props: React.PropsWithChildren<{}>) {
 		const router = useRouter();
-		const { user, loading } = useSupabase(); // TODO: Define this hook
+		const { user, loading } = useSupabase();
 
 		useEffect(() => {
 			if (!loading && !user) {

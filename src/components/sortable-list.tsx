@@ -1,23 +1,22 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { TimerStore, useTimerStore } from '@/lib/store';
+import { Task } from '@/lib/types';
 import {
 	DndContext,
-	closestCenter,
 	KeyboardSensor,
 	PointerSensor,
+	closestCenter,
 	useSensor,
 	useSensors,
 } from '@dnd-kit/core';
 import {
-	arrayMove,
 	SortableContext,
+	arrayMove,
 	sortableKeyboardCoordinates,
 	verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import SortableItem from './sortable-item';
-import { Task } from '@/lib/types';
-import { TimerStore, useTimerStore } from '@/lib/store';
 
 export default function SortableList() {
 	const [tasks, setTasks] = useTimerStore((state: unknown) => {
