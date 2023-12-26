@@ -47,10 +47,18 @@ export default function SignUpForm() {
 	});
 
 	async function onSubmit(data: z.infer<typeof signUpFormSchema>) {
+		console.log('ON SUBMIT', data)
     const { data: userData, error } = await supabase.auth.signUp({
       email: data.email,
-      password: data.password
+      password: data.password,
+			// options: {
+			// 	emailRedirectTo: '/'
+			// }
     })
+
+		console.log('USER DATA', userData)
+
+		console.error('USER DATA ERROR', error)
 
     if (error) {
       toast({ title: "Error", description: error.message, variant: 'destructive' })
@@ -68,7 +76,7 @@ export default function SignUpForm() {
 			<FormField
 				control={signUpForm.control}
 				name={name}
-				render={({ field }) => (
+				render={({ field }) => ( 
 					<FormItem>
 						<FormLabel>{label}</FormLabel>
 						<FormControl>

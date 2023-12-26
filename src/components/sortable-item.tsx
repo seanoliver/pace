@@ -102,13 +102,13 @@ export default function SortableItem({ task, id }: { task: Task; id: number }) {
 						value={editableText}
 						onChange={handleTextChange}
 						onBlur={handleBlur}
-						className='w-full font-bold  bg-transparent outline-none border-2'
+						className='w-full font-bold  bg-transparent outline-none border-2 rounded p-2'
 					/>
 				) : (
 					<div
 						onClick={handleTextClick}
 						className='flex-grow'>
-						<div className='font-bold'>{task.title}</div>
+						<div className='font-bold border-2 border-gray-100 p-2'>{task.title}</div>
 					</div>
 				)}
 			</div>

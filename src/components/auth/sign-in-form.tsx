@@ -47,7 +47,7 @@ export default function SignInForm() {
     if (error) {
       toast({ title: "Error", description: error.message, variant: 'destructive' })
     } else {
-      router.push('/') // TODO: Redirect to last page
+      router.push('/') // TODO: Redirect to last page from which user was redirected to sign in
     }
 	}
 
