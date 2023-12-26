@@ -1,17 +1,38 @@
 'use client';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useSupabase } from '@/lib/hooks/use-supabase';
+import { useSupabaseBrowserClient } from '@/lib/hooks/use-supabase-browser';
 import { User } from '@supabase/supabase-js';
+import { useEffect, useState } from 'react';
 
 export default function Nav() {
-	const { user, loading } = useSupabase();
+	const supabase = useSupabaseBrowserClient();
+	const [user, setUser] = useState<User | null>(null);
 
-	if (loading) {
-		return <LoadingUser />
-	} else if (!user) {
-		return <NullUser />
+	useEffect(() => {
+		const getUser = async () => {
+			const { data, error } = await supabase.auth.getSession();
+			if (error) {
+				console.error('ERROR GETTING USER', error)
+				return;
+			} else if (!data) {
+				console.error('NO USER DATA')
+				return;
+			} else {
+				setUser(data.session?.user as User);
+			}
+		}
+		getUser();
+	}, [])
+
+	if (user) {
+		return (
+			<UserAvatar user={user} />
+		)
 	} else {
-		return <UserAvatar user={user} />;
+		return (
+			<NullUser />
+		)
 	}
 }
 

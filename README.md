@@ -3,8 +3,7 @@
 ## MVP Tasks
 
 - [x] Supabase DB
-- [x] Clerk Auth
-- [ ] Clerk + Supabase integration: https://supabase.com/partners/integrations/clerk
+- [ ] Supabase Auth
 - [ ] Task + time entry
 - [ ] Task topics/headers (grouping tasks)
 - [ ] Total routine time summation
@@ -56,6 +55,5 @@ pnpm dev
 
 - [Next.js](https://nextjs.org/)
 - [Supabase](https://supabase.io/)
-- [Clerk](https://clerk.dev/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [PNPM](https://pnpm.io/)

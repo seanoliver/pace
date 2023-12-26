@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from "@/components/ui/use-toast";
-import { useSupabaseBrowserClient } from '@/lib/hooks/use-supabase';
+import { useSupabaseBrowserClient } from '@/lib/hooks/use-supabase-browser';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';

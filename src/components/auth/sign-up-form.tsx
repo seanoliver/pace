@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from "@/components/ui/use-toast";
-import { useSupabaseBrowserClient } from '@/lib/hooks/use-supabase';
+import { useSupabaseBrowserClient } from '@/lib/hooks/use-supabase-browser';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -46,16 +46,13 @@ export default function SignUpForm() {
 		},
 	});
 
-	async function onSubmit(data: z.infer<typeof signUpFormSchema>) {
-		console.log('ON SUBMIT', data)
+	async function onSubmit(formData: z.infer<typeof signUpFormSchema>) {
+		console.log('ON SUBMIT', formData)
     const { data: userData, error } = await supabase.auth.signUp({
-      email: data.email,
-      password: data.password,
-			// options: {
-			// 	emailRedirectTo: '/'
-			// }
+      email: formData.email,
+      password: formData.password,
     })
-
+		// TODO: Enable email verification and handle null user state
 		console.log('USER DATA', userData)
 
 		console.error('USER DATA ERROR', error)
