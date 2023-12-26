@@ -21,7 +21,6 @@ CREATE TABLE tasks (
   created_at timestamp with time zone NOT NULL DEFAULT timezone('utc' :: text, now()),
   updated_at timestamp with time zone
 );
-
 CREATE INDEX ON tasks(user_id);
 
 -- Headings table
@@ -32,7 +31,6 @@ CREATE TABLE headings (
   created_at timestamp with time zone NOT NULL DEFAULT timezone('utc' :: text, now()),
   updated_at timestamp with time zone NOT NULL DEFAULT timezone('utc' :: text, now())
 );
-
 CREATE INDEX ON headings(user_id);
 
 -- Areas table
@@ -43,7 +41,6 @@ CREATE TABLE areas (
   created_at timestamp with time zone NOT NULL DEFAULT timezone('utc' :: text, now()),
   updated_at timestamp with time zone NOT NULL DEFAULT timezone('utc' :: text, now())
 );
-
 CREATE INDEX ON areas(user_id);
 
 -- Tasks and Headings association table
@@ -68,115 +65,68 @@ CREATE TABLE areas_headings (
 );
 
 -- Enable Row Level Security
-ALTER TABLE
-  profiles ENABLE ROW LEVEL SECURITY;
-
-ALTER TABLE
-  tasks ENABLE ROW LEVEL SECURITY;
-
-ALTER TABLE
-  headings ENABLE ROW LEVEL SECURITY;
-
-ALTER TABLE
-  areas ENABLE ROW LEVEL SECURITY;
-
-ALTER TABLE
-  tasks_headings ENABLE ROW LEVEL SECURITY;
-
-ALTER TABLE
-  tasks_areas ENABLE ROW LEVEL SECURITY;
+ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
+ALTER TABLE headings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE areas ENABLE ROW LEVEL SECURITY;
+ALTER TABLE tasks_headings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE tasks_areas ENABLE ROW LEVEL SECURITY;
 
 -- Policies
-CREATE POLICY "Users can only access their own profiles" ON profiles FOR ALL USING (auth.uid() = id);
+CREATE POLICY "Users can only access their own profiles" ON profiles 
+  FOR ALL USING (auth.uid() = id);
 
-CREATE POLICY "Users can only access their own tasks" ON tasks FOR ALL USING (auth.uid() = user_id);
+CREATE POLICY "Users can only access their own tasks" ON tasks 
+  FOR ALL USING (auth.uid() = user_id);
 
-CREATE POLICY "Users can only access their own headings" ON headings FOR ALL USING (auth.uid() = user_id);
+CREATE POLICY "Users can only access their own headings" ON headings 
+  FOR ALL USING (auth.uid() = user_id);
 
-CREATE POLICY "Users can only access their own areas" ON areas FOR ALL USING (auth.uid() = user_id);
+CREATE POLICY "Users can only access their own areas" ON areas 
+  FOR ALL USING (auth.uid() = user_id);
 
-CREATE POLICY "Users can only access their own tasks_headings" ON tasks_headings FOR ALL USING (
-  auth.uid() = (
-    SELECT
-      user_id
-    FROM
-      tasks
-    WHERE
-      id = task_id
-  )
-);
+CREATE POLICY "Users can only access their own tasks_headings" ON tasks_headings 
+  FOR ALL USING (auth.uid() = (SELECT user_id FROM tasks WHERE id = task_id));
 
-CREATE POLICY "Users can only access their own tasks_areas" ON tasks_areas FOR ALL USING (
-  auth.uid() = (
-    SELECT
-      user_id
-    FROM
-      tasks
-    WHERE
-      id = task_id
-  )
-);
+CREATE POLICY "Users can only access their own tasks_areas" ON tasks_areas 
+  FOR ALL USING (auth.uid() = (SELECT user_id FROM tasks WHERE id = task_id));
 
-CREATE POLICY "Users can only access their own areas_headings" ON areas_headings FOR ALL USING (
-  auth.uid() = (
-    SELECT
-      user_id
-    FROM
-      areas
-    WHERE
-      id = area_id
-  )
-);
+CREATE POLICY "Users can only access their own areas_headings" ON areas_headings 
+  FOR ALL USING (auth.uid() = (SELECT user_id FROM areas WHERE id = area_id));
 
 -- Timestamp update triggers
-CREATE
-OR REPLACE FUNCTION update_timestamp() RETURNS TRIGGER AS $ $ BEGIN NEW.updated_at = NOW();
-
-RETURN NEW;
-
+CREATE OR REPLACE FUNCTION update_timestamp()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
 END;
+$$ LANGUAGE plpgsql;
 
-$ $ LANGUAGE plpgsql;
+CREATE TRIGGER update_profile_timestamp BEFORE UPDATE ON profiles FOR EACH ROW EXECUTE FUNCTION update_timestamp();
+CREATE TRIGGER update_task_timestamp BEFORE UPDATE ON tasks FOR EACH ROW EXECUTE FUNCTION update_timestamp();
+CREATE TRIGGER update_heading_timestamp BEFORE UPDATE ON headings FOR EACH ROW EXECUTE FUNCTION update_timestamp();
+CREATE TRIGGER update_area_timestamp BEFORE UPDATE ON areas FOR EACH ROW EXECUTE FUNCTION update_timestamp();
 
-CREATE TRIGGER update_profile_timestamp BEFORE
-UPDATE
-  ON profiles FOR EACH ROW EXECUTE FUNCTION update_timestamp();
-
-CREATE TRIGGER update_task_timestamp BEFORE
-UPDATE
-  ON tasks FOR EACH ROW EXECUTE FUNCTION update_timestamp();
-
-CREATE TRIGGER update_heading_timestamp BEFORE
-UPDATE
-  ON headings FOR EACH ROW EXECUTE FUNCTION update_timestamp();
-
-CREATE TRIGGER update_area_timestamp BEFORE
-UPDATE
-  ON areas FOR EACH ROW EXECUTE FUNCTION update_timestamp();
 
 -- Create a function that will be triggered upon user creation
-CREATE
-OR REPLACE FUNCTION public.handle_new_user() RETURNS TRIGGER LANGUAGE plpgsql SECURITY DEFINER
-SET
-  search_path = public AS $ $ BEGIN -- Insert a new profile with the username set to the email alias
-INSERT INTO
-  public.profiles (id, username, created_at, updated_at)
-VALUES
-  (
-    NEW.id,
-    split_part(NEW.email, '@', 1),
-    NOW(),
-    NOW()
-  );
-
-RETURN NEW;
-
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+    -- Insert a new profile with the username set to the email alias
+    INSERT INTO public.profiles (id, username, created_at, updated_at)
+    VALUES (NEW.id, split_part(NEW.email, '@', 1), NOW(), NOW());
+    
+    RETURN NEW;
 END;
-
-$ $;
+$$;
 
 -- Create a trigger on the auth.users table
 CREATE TRIGGER on_auth_user_created
-AFTER
-INSERT
-  ON auth.users FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+AFTER INSERT ON auth.users
+FOR EACH ROW
+EXECUTE FUNCTION public.handle_new_user();
