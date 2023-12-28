@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from "@/components/ui/use-toast";
-import { useSupabaseBrowserClient } from '@/lib/hooks/use-supabase-browser';
+import { supabaseClient } from '@/lib/hooks/use-supabase-browser';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -35,7 +35,6 @@ const signUpFormSchema = z
 export default function SignUpForm() {
   const { toast } = useToast()
   const router = useRouter();
-  const supabase = useSupabaseBrowserClient();
 
 	const signUpForm = useForm<z.infer<typeof signUpFormSchema>>({
 		resolver: zodResolver(signUpFormSchema),
@@ -48,7 +47,7 @@ export default function SignUpForm() {
 
 	async function onSubmit(formData: z.infer<typeof signUpFormSchema>) {
 		console.log('ON SUBMIT', formData)
-    const { data: userData, error } = await supabase.auth.signUp({
+    const { data: userData, error } = await supabaseClient.auth.signUp({
       email: formData.email,
       password: formData.password,
     })

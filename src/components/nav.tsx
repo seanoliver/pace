@@ -1,17 +1,18 @@
 'use client';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useSupabaseBrowserClient } from '@/lib/hooks/use-supabase-browser';
+import { supabaseClient } from '@/lib/hooks/use-supabase-browser';
+import { useTimerStore, TimerStore } from '@/lib/store';
 import { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 
 export default function Nav() {
-	const supabase = useSupabaseBrowserClient();
-	const [user, setUser] = useState<User | null>(null);
+	// @ts-ignore - TS bu xi huan zustand
+	const { user, setUser } = useTimerStore((state) => ({ user: state.user, setUser: state.setUser }));
 
 	useEffect(() => {
 		const getUser = async () => {
-			const { data, error } = await supabase.auth.getSession();
+			const { data, error } = await supabaseClient.auth.getSession();
 			if (error) {
 				console.error('ERROR GETTING USER', error)
 				return;
