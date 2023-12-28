@@ -1,6 +1,6 @@
 'use client';
 
-import { TimerStore, useTimerStore } from '@/lib/store';
+import { PaceStore, usePaceStore } from '@/lib/store';
 import { Task } from '@/lib/types';
 import {
 	DndContext,
@@ -19,8 +19,8 @@ import {
 import SortableItem from './sortable-item';
 
 export default function SortableList() {
-	const [tasks, setTasks] = useTimerStore((state: unknown) => {
-		const timerState = state as TimerStore;
+	const [tasks, setTasks] = usePaceStore((state: unknown) => {
+		const timerState = state as PaceStore;
 		return [timerState.tasks, timerState.setTasks];
 	});
 

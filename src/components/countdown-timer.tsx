@@ -1,6 +1,6 @@
 'use client'
 
-import { TimerStore, useTimerStore } from '@/lib/store';
+import { PaceStore, usePaceStore } from '@/lib/store';
 import React, { useState, useEffect, useRef } from 'react';
 import TimeSetter from './time-setter';
 import { TASKS } from '@/lib/constants';
@@ -15,8 +15,8 @@ export const CountdownTimer = () => {
     pause,
     stop,
     reset
-  } = useTimerStore((state: unknown) => {
-    const timerState = state as TimerStore;
+  } = usePaceStore((state: unknown) => {
+    const timerState = state as PaceStore;
     return {
       targetTime: timerState.targetTime,
       isActive: timerState.isActive,

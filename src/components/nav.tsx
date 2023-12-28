@@ -2,13 +2,13 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { supabaseClient } from '@/lib/hooks/use-supabase-browser';
-import { useTimerStore, TimerStore } from '@/lib/store';
+import { usePaceStore, PaceStore } from '@/lib/store';
 import { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 
 export default function Nav() {
 	// @ts-ignore - TS bu xi huan zustand
-	const { user, setUser } = useTimerStore((state) => ({ user: state.user, setUser: state.setUser }));
+	const { user, setUser } = usePaceStore((state) => ({ user: state.user, setUser: state.setUser }));
 
 	useEffect(() => {
 		const getUser = async () => {

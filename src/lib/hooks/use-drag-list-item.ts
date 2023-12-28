@@ -1,8 +1,6 @@
-import { useState, useRef, useCallback, useEffect } from "react";
-import { useSortable } from "@dnd-kit/sortable";
-import { Task } from "../types";
-import { CSS } from "@dnd-kit/utilities";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { updateTask, upsertTask } from "../actions";
+import { Task } from "../types";
 
 const useTaskListItem = (currentTask: Task) => {
   const [task, setTask] = useState(currentTask); // Current task
@@ -107,33 +105,6 @@ const useTaskListItem = (currentTask: Task) => {
     handleDurationChange,
     toggleCompleted,
   };
-
-  // const [isDragging, setIsDragging] = useState(false);
-  // const dragTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  // const dragDelay = 200; // ms
-
-  // const initDrag = useCallback(() => setIsDragging(true), [id]);
-
-  // const handleMouseDown = useCallback(() => {
-  //   dragTimeoutRef.current = setTimeout(initDrag, dragDelay);
-  // }, [initDrag, dragDelay]);
-
-  // const handleMouseUp = useCallback(() => {
-  //   clearTimeout(dragTimeoutRef.current);
-  //   if (isDragging) {
-  //     setIsDragging(false);
-  //     if (onDragEnd) onDragEnd(id);
-  //   }
-  // }, [isDragging, id, onDragEnd]);
-
-  // // Clean up the timeout when the component unmounts
-  // const cleanUp = useCallback(() => {
-  //   if (dragTimeoutRef.current) {
-  //     clearTimeout(dragTimeoutRef.current);
-  //   }
-  // }, []);
-
-  // return { isDragging, handleMouseDown, handleMouseUp, cleanUp };
 };
 
 export default useTaskListItem;
