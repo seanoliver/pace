@@ -19,7 +19,7 @@ export interface PaceStore {
   reset: (initialTime: number) => void;
 }
 
-export const usePaceStore = create((set):PaceStore => ({
+export const usePaceStore = create<PaceStore>()((set):PaceStore => ({
   user: null,
   targetTime: 0,
   isActive: false,

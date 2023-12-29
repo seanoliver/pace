@@ -1,8 +1,7 @@
 import { Task } from "./types";
 
-export const TASKS: Task[] = [
+export const TASKS: Partial<Task>[] = [
 	{
-		id: '1',
 		user_id: '03dc5782-828e-4872-b467-07ea8fbfea3e',
 		title: 'Plan Weekly Meal Prep',
 		notes:
@@ -14,7 +13,6 @@ export const TASKS: Task[] = [
 		status: 'done',
 	},
 	{
-		id: '2',
 		user_id: '03dc5782-828e-4872-b467-07ea8fbfea3e',
 		title: 'Exercise Session',
 		notes:

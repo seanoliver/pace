@@ -50,9 +50,9 @@ export default function SortableList() {
 				items={tasks.map(task => task.id)}
 				strategy={verticalListSortingStrategy}>
 				<div className='flex p-4 flex-col gap-4 text-sm'>
-					{tasks.map((task: Task) => (
+					{tasks.map((task: Task, index: number) => (
 						<SortableItem
-							key={task.id}
+							key={index}
 							id={task.id}
 							task={task}
 						/>

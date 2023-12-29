@@ -1,7 +1,8 @@
 import { Task } from "./types";
 import { supabaseClient } from "./hooks/use-supabase-browser";
 
-export const createTask = async (task: Task) => {
+export const createTask = async (task: Partial<Task>) => {
+  console.log('CREATE TASK, task: ', task)
   const { data, error } = await supabaseClient.from("tasks").insert([task]);
   if (error) {
     throw error;
