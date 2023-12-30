@@ -17,12 +17,15 @@ import {
 	verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import SortableItem from './sortable-item';
+import { useEffect } from 'react';
 
 export default function SortableList() {
 	const [tasks, setTasks] = usePaceStore((state: unknown) => {
 		const timerState = state as PaceStore;
 		return [timerState.tasks, timerState.setTasks];
 	});
+
+	
 
 	const handleDragEnd = (event: any) => {
 		const { active, over } = event;
@@ -40,6 +43,16 @@ export default function SortableList() {
 			coordinateGetter: sortableKeyboardCoordinates,
 		})
 	);
+
+	// Fetch tasks from the API.
+	useEffect(() => {
+    const fetchTasks = async () => {
+      const res = await fetch('/api/tasks')
+      const data = await res.json()
+			setTasks(data)
+    }
+    fetchTasks()
+  }, [setTasks])
 
 	return (
 		<DndContext
