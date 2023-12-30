@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { updateTask, upsertTask } from "../actions";
+import { updateTask, upsertTask } from "../../server/tasks";
 import { Task } from "../types";
 
 const useTaskListItem = (currentTask: Task) => {

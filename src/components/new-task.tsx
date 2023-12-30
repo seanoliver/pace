@@ -13,7 +13,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePaceStore } from '@/lib/store';
-import { createTask } from '@/lib/actions';
+import { createTask } from '@/server/tasks';
 import { Button } from './ui/button';
 
 const newTaskSchema = z.object({

@@ -10,4 +10,4 @@ if (process.env.NODE_ENV === 'development') {
 /**
  * Creates a browser client for Supabase.
  */
-export const supabaseClient = createBrowserClient(supabaseUrl!, supabaseAnonKey!);
+export const supabaseBrowserClient = createBrowserClient(supabaseUrl!, supabaseAnonKey!);

@@ -24,7 +24,7 @@ export const usePaceStore = create<PaceStore>()((set):PaceStore => ({
   targetTime: 0,
   isActive: false,
   isPaused: false,
-  tasks: TASKS,
+  tasks: [],
 
   setUser: (user: User) => set({ user }),
   setTargetTime: (targetTime: number) => set({ targetTime }),

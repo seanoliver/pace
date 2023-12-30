@@ -1,9 +1,9 @@
-import { Task } from "./types";
-import { supabaseClient } from "./hooks/use-supabase-browser";
+import { Task } from "../lib/types";
+import { supabaseBrowserClient } from "../lib/supabase-browser";
 
 export const createTask = async (task: Partial<Task>) => {
   console.log('CREATE TASK, task: ', task)
-  const { data, error } = await supabaseClient.from("tasks").insert([task]);
+  const { data, error } = await supabaseBrowserClient.from("tasks").insert([task]);
   if (error) {
     throw error;
   }
@@ -11,7 +11,7 @@ export const createTask = async (task: Partial<Task>) => {
 }
 
 export const updateTask = async (task: Task) => {
-  const { data, error } = await supabaseClient.from("tasks").update(task).match({ id: task.id });
+  const { data, error } = await supabaseBrowserClient.from("tasks").update(task).match({ id: task.id });
   if (error) {
     throw error;
   }
@@ -19,7 +19,7 @@ export const updateTask = async (task: Task) => {
 }
 
 export const deleteTask = async (id: string) => {
-  const { data, error } = await supabaseClient.from("tasks").delete().match({ id });
+  const { data, error } = await supabaseBrowserClient.from("tasks").delete().match({ id });
   if (error) {
     throw error;
   }
@@ -27,7 +27,7 @@ export const deleteTask = async (id: string) => {
 }
 
 export const getTasks = async () => {
-  const { data, error } = await supabaseClient.from("tasks").select("*");
+  const { data, error } = await supabaseBrowserClient.from("tasks").select("*");
   if (error) {
     throw error;
   }
