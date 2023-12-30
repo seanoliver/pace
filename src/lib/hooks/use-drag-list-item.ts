@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { updateTask, upsertTask } from "../../server/tasks";
 import { Task } from "../types";
 
 const useTaskListItem = (currentTask: Task) => {
@@ -20,7 +19,7 @@ const useTaskListItem = (currentTask: Task) => {
 
     setIsEditing(false);
     setTask(updatedTask);
-    upsertTask(updatedTask);
+    // upsertTask(updatedTask);
   }, [taskTitle]);
 
   // Set isEditing to true when text is clicked (not dragged)
@@ -67,7 +66,7 @@ const useTaskListItem = (currentTask: Task) => {
     }
 
     setTask(updatedTask);
-    updateTask(updatedTask);
+    // updateTask(updatedTask);
   };
 
   // Clean up the timeout when the component unmounts

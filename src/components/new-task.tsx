@@ -13,8 +13,8 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePaceStore } from '@/lib/store';
-import { createTask } from '@/server/tasks';
 import { Button } from './ui/button';
+import { useEffect } from 'react';
 
 const newTaskSchema = z.object({
   title: z.string().min(1),
@@ -24,6 +24,7 @@ const newTaskSchema = z.object({
 
 export default function NewTask() {
   const { user } = usePaceStore((state) => ({ user: state.user }));
+
   const newTaskForm = useForm<z.infer<typeof newTaskSchema>>({
     resolver: zodResolver(newTaskSchema),
     defaultValues: {
@@ -35,33 +36,67 @@ export default function NewTask() {
 
   async function onSubmit(formData: z.infer<typeof newTaskSchema>) {
     console.log('NEW TASK ON SUBMIT', formData);
-    await createTask(formData);
+    await fetch ('/api/tasks', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
   }
 
-  const renderHiddenFields = (fields: (keyof z.infer<typeof newTaskSchema>)[]) => {
+  const renderHiddenStatusField = () => {
     return (
-      <>
-        {fields.map(f => (
-          <FormField
-            key={f}
-            control={newTaskForm.control}
-            name={f}
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    {...field}
-                    type='hidden'
-                    value={newTaskForm.getValues(f)}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        ))}
-      </>
+      <FormField
+        control={newTaskForm.control}
+        name='status'
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <Input
+                {...field}
+                type='hidden'
+                value={newTaskForm.getValues('status') || ''}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
     )
   }
+
+  const renderHiddenUserIdField = () => {
+    if (!user) return null;
+
+    return (
+      <FormField
+        control={newTaskForm.control}
+        name='user_id'
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <Input
+                {...field}
+                type='hidden'
+                value={user.id}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+    )
+  }
+
+  // Update the user_id field if the user changes
+  useEffect(() => {
+    if (user) {
+      newTaskForm.reset({
+        title: '',
+        user_id: user.id,
+        status: 'todo',
+      });
+    }
+  }, [user]);
 
   return (
     <div>
@@ -86,8 +121,9 @@ export default function NewTask() {
               </FormItem>
             )}
           />
-          {renderHiddenFields(['user_id', 'status'])}
-          <Button type='submit'>Submit</Button>
+          {renderHiddenStatusField()}
+          {renderHiddenUserIdField()}
+          <Button type='submit' disabled={!user}>Submit</Button>
         </form>
       </Form>
     </div>
