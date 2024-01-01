@@ -3,7 +3,7 @@ import { createTask, deleteTask, getTasks, patchTask, updateTask } from "@/serve
 
 export async function GET(req: Request) {
   const { data, error } = await getTasks();
-  console.log ("data: ", data);
+  console.log('GET /api/tasks', data, error)
   if (error) {
     return new Response(JSON.stringify({ error }), { status: 400 });
   }
@@ -33,21 +33,21 @@ export async function PUT(req: Request) {
   return new Response(JSON.stringify(data), { status: 200 });
 }
 
-export async function DELETE(req: Request) {
-  // Assuming you have a deleteTask function
-  const { id } = await req.json();
-  const { data, error } = await deleteTask(id);
+export async function PATCH(req: Request) {
+  const res = await req.json();
+  const taskData: Task = { ...res };
+  console.log('PATCH /api/tasks', taskData)
+  const { data, error } = await patchTask(taskData);
   if (error) {
     return new Response(JSON.stringify({ error }), { status: 400 });
   }
   return new Response(JSON.stringify(data), { status: 200 });
 }
 
-export async function PATCH(req: Request) {
-  // Assuming you have a patchTask function
-  const { id, data: reqData } = await req.json();
-  const taskData: Task = { ...reqData, id };
-  const { data, error } = await patchTask(taskData);
+export async function DELETE(req: Request) {
+  // Assuming you have a deleteTask function
+  const { id } = await req.json();
+  const { data, error } = await deleteTask(id);
   if (error) {
     return new Response(JSON.stringify({ error }), { status: 400 });
   }

@@ -19,6 +19,17 @@ const useTaskListItem = (currentTask: Task) => {
     setIsEditing(false);
     setTask(updatedTask);
 
+    const saveTask = async () => {
+      await fetch('/api/tasks', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedTask)
+      })
+    }
+
+    saveTask()
     // upsertTask(updatedTask);
   }, [taskTitle, setTask]);
 
