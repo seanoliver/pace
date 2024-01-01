@@ -20,12 +20,7 @@ import SortableItem from './sortable-item';
 import { useEffect } from 'react';
 
 export default function SortableList() {
-	const [tasks, setTasks] = usePaceStore((state: unknown) => {
-		const timerState = state as PaceStore;
-		return [timerState.tasks, timerState.setTasks];
-	});
-
-	
+	const [tasks, setTasks] = usePaceStore(state => [state.tasks, state.setTasks]);
 
 	const handleDragEnd = (event: any) => {
 		const { active, over } = event;
@@ -34,6 +29,8 @@ export default function SortableList() {
 			const newIndex = tasks.findIndex(task => task.id === over.id);
 			const newTasks = arrayMove(tasks, oldIndex, newIndex);
 			setTasks(newTasks);
+			
+			// TODO: Store the new order in the database.
 		}
 	};
 
@@ -63,9 +60,9 @@ export default function SortableList() {
 				items={tasks.map(task => task.id)}
 				strategy={verticalListSortingStrategy}>
 				<div className='flex p-4 flex-col gap-4 text-sm'>
-					{tasks.map((task: Task, index: number) => (
+					{tasks.map((task: Task) => (
 						<SortableItem
-							key={index}
+							key={task.id}
 							id={task.id}
 							task={task}
 						/>

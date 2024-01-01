@@ -14,13 +14,13 @@ const useTaskListItem = (currentTask: Task) => {
 
   // Save the new task title when the input is blurred
   const handleBlur = useCallback(() => {
-    console.log("HANDLE BLUR, taskTitle: ", taskTitle);
     let updatedTask = { ...task, title: taskTitle };
 
     setIsEditing(false);
     setTask(updatedTask);
+
     // upsertTask(updatedTask);
-  }, [taskTitle]);
+  }, [taskTitle, setTask]);
 
   // Set isEditing to true when text is clicked (not dragged)
   const handleTextClick = () => {
@@ -46,12 +46,9 @@ const useTaskListItem = (currentTask: Task) => {
   }, [isDragging, handleTextClick]);
 
   // Control the task title state whenever the input value changes
-  const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setTaskTitle(event.target.value);
+  const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => setTaskTitle(event.target.value);
 
-  const handleDurationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    task.duration = parseInt(event.target.value, 10);
-  };
+  const handleDurationChange = (event: React.ChangeEvent<HTMLInputElement>) => task.duration = parseInt(event.target.value, 10);
 
   // Toggle task status between "todo" and "done"
   // TODO: Support 'doing' status
@@ -78,12 +75,7 @@ const useTaskListItem = (currentTask: Task) => {
     };
   }, []);
 
-  useEffect(() => {
-    if (isEditing) {
-      // Focus on the next tick
-      setTimeout(() => inputRef.current?.focus(), 0);
-    }
-  }, [isEditing]);
+
 
   useEffect(() => {
     if (isEditing) {

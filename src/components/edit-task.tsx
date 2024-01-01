@@ -1,14 +1,28 @@
 import { Input } from "./ui/input";
 
-export default function EditTask({ inputRef, editableText, handleTextChange, handleBlur, className }) {
+interface EditTaskProps {
+  taskTitle: string
+  handleTextChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  handleBlur: () => void
+  inputRef: React.RefObject<HTMLInputElement>
+  toggleCompleted: () => void
+}
+
+export default function EditTask({ taskTitle, handleTextChange, handleBlur, inputRef, toggleCompleted }: EditTaskProps) {
   return (
-    <Input
-      ref={inputRef}
-      type='text'
-      value={editableText}
-      onChange={handleTextChange}
-      onBlur={handleBlur}
-      className={className}
-    />
+    <div className='flex flex-row items-center gap-2 bg-gray-200'>
+      <input
+        type='checkbox'
+        onClick={toggleCompleted}
+      />
+      <Input
+        ref={inputRef}
+        type='text'
+        value={taskTitle}
+        onChange={handleTextChange}
+        onBlur={handleBlur}
+        className='w-full bg-transparent outline-none rounded p-2'
+      />
+    </div>
   )
 }
