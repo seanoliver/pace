@@ -1,5 +1,3 @@
-import { Input } from "./ui/input";
-
 interface EditTaskProps {
   taskTitle: string
   handleTextChange: (event: React.ChangeEvent<HTMLInputElement>) => void
@@ -15,7 +13,7 @@ export default function EditTask({ taskTitle, handleTextChange, handleBlur, inpu
         type='checkbox'
         onClick={toggleCompleted}
       />
-      <Input
+      <input
         ref={inputRef}
         type='text'
         value={taskTitle}

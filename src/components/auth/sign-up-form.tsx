@@ -51,9 +51,6 @@ export default function SignUpForm() {
       password: formData.password,
     })
 		// TODO: Enable email verification and handle null user state
-		console.log('USER DATA', userData)
-
-		console.error('USER DATA ERROR', error)
 
     if (error) {
       toast({ title: "Error", description: error.message, variant: 'destructive' })

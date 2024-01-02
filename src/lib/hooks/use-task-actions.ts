@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Task } from "../types";
 
-const useTaskListItem = (currentTask: Task) => {
+const useTaskActions = (currentTask: Task) => {
   const [task, setTask] = useState(currentTask); // Current task
   const [isEditing, setIsEditing] = useState(false); // Toggle between "editing" and "display" mode
   const [isDragging, setIsDragging] = useState(false); // Used to distinguish between dragging and clicking
@@ -109,4 +109,4 @@ const useTaskListItem = (currentTask: Task) => {
   };
 };
 
-export default useTaskListItem;
+export default useTaskActions;

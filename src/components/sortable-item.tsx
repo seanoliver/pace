@@ -1,4 +1,4 @@
-import useTaskListItem from '@/lib/hooks/use-drag-list-item';
+import useTaskActions from '@/lib/hooks/use-task-actions';
 import { Task } from '@/lib/types';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -25,7 +25,7 @@ export default function SortableItem({ task, id }: { task: Task; id: string }) {
 		handleMouseUp,
 		handleTextChange,
 		handleDurationChange,
-		toggleCompleted } = useTaskListItem(task)
+		toggleCompleted } = useTaskActions(task)
 		
 	return (
 		<div
