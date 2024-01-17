@@ -30,7 +30,6 @@ const useTaskActions = (currentTask: Task) => {
     }
 
     saveTask()
-    // upsertTask(updatedTask);
   }, [taskTitle, setTask]);
 
   // Set isEditing to true when text is clicked (not dragged)
@@ -74,6 +73,14 @@ const useTaskActions = (currentTask: Task) => {
     }
 
     setTask(updatedTask);
+    // TODO: Implement API call to update task status here
+    // await fetch('/api/tasks/', {
+    //   method: 'PATCH',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(updatedTask)
+    // })
     // updateTask(updatedTask);
   };
 
