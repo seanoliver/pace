@@ -24,7 +24,7 @@ const newTaskSchema = z.object({
 })
 
 export default function NewTask() {
-  const { user } = usePaceStore(state => ({ user: state.user }))
+  const { user, setTasks } = usePaceStore(state => ({ user: state.user, setTasks: state.setTasks }))
 
   const newTaskForm = useForm<z.infer<typeof newTaskSchema>>({
     resolver: zodResolver(newTaskSchema),
@@ -36,13 +36,26 @@ export default function NewTask() {
   })
 
   async function onSubmit(formData: z.infer<typeof newTaskSchema>) {
-    console.log('NEW TASK ON SUBMIT', formData)
-    await fetch('/api/tasks', {
+    const response = await fetch('/api/tasks', {
       method: 'POST',
       body: JSON.stringify(formData),
       headers: {
         'Content-Type': 'application/json',
       },
+    })
+
+    // Update tasks state to re-render `SortableList` component.
+    if (response.ok) {
+      const res = await fetch('/api/tasks')
+      const data = await res.json()
+      setTasks(data)
+    }
+
+    // Clear the form.
+    newTaskForm.reset({
+      title: '',
+      user_id: user?.id,
+      status: 'todo',
     })
   }
 
