@@ -12,10 +12,16 @@ export default function DisplayTask({
   toggleCompleted,
 }: DisplayTaskProps) {
   return (
-    <div className="flex flex-row items-center gap-2">
-      <Checkbox taskStatus="todo" toggleCompleted={toggleCompleted} />
-      <div onClick={handleTextClick} className="flex-grow">
-        <div className="p-2">{taskTitle}</div>
+    <div className='flex flex-row items-center gap-2'>
+      <Checkbox
+        taskStatus='todo'
+        toggleCompleted={toggleCompleted}
+      />
+      <div
+        onClick={handleTextClick}
+        className='flex-grow'
+      >
+        <div className='p-2'>{taskTitle}</div>
       </div>
     </div>
   )

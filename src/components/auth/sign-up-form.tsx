@@ -27,7 +27,7 @@ const signUpFormSchema = z
       .string()
       .min(8, { message: 'Password must be at least 8 characters' }),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine(data => data.password === data.confirmPassword, {
     message: 'Passwords do not match',
     path: ['confirmPassword'],
   })
@@ -76,7 +76,10 @@ export default function SignUpForm() {
           <FormItem>
             <FormLabel>{label}</FormLabel>
             <FormControl>
-              <Input type={type} {...field} />
+              <Input
+                type={type}
+                {...field}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -86,27 +89,30 @@ export default function SignUpForm() {
   }
 
   return (
-    <div className="w-1/3">
+    <div className='w-1/3'>
       <Form {...signUpForm}>
         <form
           onSubmit={signUpForm.handleSubmit(onSubmit)}
-          onError={(errors) =>
+          onError={errors =>
             toast({
               title: 'Error',
               description: JSON.stringify(errors, null, 2),
               variant: 'destructive',
             })
           }
-          className="space-y-8"
+          className='space-y-8'
         >
           {renderFormField('email', 'Email', 'email')}
           {renderFormField('password', 'Password', 'password')}
           {renderFormField('confirmPassword', 'Confirm Password', 'password')}
-          <Button type="submit">Submit</Button>
+          <Button type='submit'>Submit</Button>
         </form>
       </Form>
-      <div className="flex justify-center">
-        <Button variant={'link'} onClick={() => router.push('/sign-in')}>
+      <div className='flex justify-center'>
+        <Button
+          variant={'link'}
+          onClick={() => router.push('/sign-in')}
+        >
           Sign In
         </Button>
       </div>

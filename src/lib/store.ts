@@ -33,7 +33,7 @@ export const usePaceStore = create<PaceStore>()(
     start: () => set({ isActive: true, isPaused: false }),
     pause: () => set((state: PaceStore) => ({ isPaused: !state.isPaused })),
     stop: () => set({ targetTime: 0, isActive: false, isPaused: false }),
-    reset: (initialTime) =>
+    reset: initialTime =>
       set({ targetTime: initialTime, isActive: false, isPaused: false }),
   }),
 )

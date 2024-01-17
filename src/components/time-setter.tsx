@@ -37,29 +37,29 @@ const NumberFormatter: React.FC = () => {
   const inputClasses = 'w-16 text-center'
 
   return (
-    <div className="flex">
+    <div className='flex'>
       <Input
-        type="text"
+        type='text'
         value={hours}
-        placeholder="HH"
+        placeholder='HH'
         onChange={handleHourChange}
         className={inputClasses}
         // Additional props for keyboard event handling
       />
       <Input
-        type="text"
+        type='text'
         value={minutes}
-        placeholder="MM"
+        placeholder='MM'
         className={inputClasses}
-        onChange={(e) => handleMinuteSecondChange(e, 'minutes')}
+        onChange={e => handleMinuteSecondChange(e, 'minutes')}
         // Additional props for keyboard event handling
       />
       <Input
-        type="text"
+        type='text'
         value={seconds}
-        placeholder="SS"
+        placeholder='SS'
         className={inputClasses}
-        onChange={(e) => handleMinuteSecondChange(e, 'seconds')}
+        onChange={e => handleMinuteSecondChange(e, 'seconds')}
         // Additional props for keyboard event handling
       />
     </div>

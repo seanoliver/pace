@@ -67,7 +67,10 @@ export default function SignInForm() {
           <FormItem>
             <FormLabel>{label}</FormLabel>
             <FormControl>
-              <Input type={type} {...field} />
+              <Input
+                type={type}
+                {...field}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -77,26 +80,29 @@ export default function SignInForm() {
   }
 
   return (
-    <div className="w-1/3">
+    <div className='w-1/3'>
       <Form {...signInForm}>
         <form
           onSubmit={signInForm.handleSubmit(onSubmit)}
-          onError={(errors) =>
+          onError={errors =>
             toast({
               title: 'Error',
               description: JSON.stringify(errors, null, 2),
               variant: 'destructive',
             })
           }
-          className="space-y-8"
+          className='space-y-8'
         >
           {renderFormField('email', 'Email', 'email')}
           {renderFormField('password', 'Password', 'password')}
-          <Button type="submit">Submit</Button>
+          <Button type='submit'>Submit</Button>
         </form>
       </Form>
-      <div className="flex justify-center">
-        <Button variant={'link'} onClick={() => router.push('/sign-up')}>
+      <div className='flex justify-center'>
+        <Button
+          variant={'link'}
+          onClick={() => router.push('/sign-up')}
+        >
           Sign Up
         </Button>
       </div>

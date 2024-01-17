@@ -30,14 +30,14 @@ export default function SortableItem({ task, id }: { task: Task; id: string }) {
 
   return (
     <div
-      className="flex items-center gap-4 px-4 rounded"
+      className='flex items-center gap-4 px-4 rounded'
       ref={setNodeRef}
       style={style}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       {...(isEditing ? {} : { ...attributes, ...listeners })}
     >
-      <div className="flex-grow">
+      <div className='flex-grow'>
         {isEditing ? (
           <EditTask
             taskTitle={taskTitle}

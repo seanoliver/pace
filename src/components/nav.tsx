@@ -7,7 +7,7 @@ import { User } from '@supabase/supabase-js'
 import { useEffect } from 'react'
 
 export default function Nav() {
-  const { user, setUser } = usePaceStore((state) => ({
+  const { user, setUser } = usePaceStore(state => ({
     user: state.user,
     setUser: state.setUser,
   }))
@@ -37,29 +37,29 @@ export default function Nav() {
 
 const UserAvatar = ({ user }: { user: User }) => {
   return (
-    <div className="flex items-center gap-4 justify-end m-2">
+    <div className='flex items-center gap-4 justify-end m-2'>
       <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" />
+        <AvatarImage src='https://github.com/shadcn.png' />
         <AvatarFallback>
           {user?.email?.slice(0, 2).toUpperCase()}
         </AvatarFallback>
       </Avatar>
-      <div className="text-xs">{user?.email?.split('@')[0]}</div>
+      <div className='text-xs'>{user?.email?.split('@')[0]}</div>
     </div>
   )
 }
 
 const LoadingUser = () => {
   return (
-    <div className="flex items-center gap-4 justify-end m-2">Loading...</div>
+    <div className='flex items-center gap-4 justify-end m-2'>Loading...</div>
   )
 }
 
 // TODO: Add sign in button
 const NullUser = () => {
   return (
-    <div className="flex items-center gap-4 justify-end m-2">
-      <div className="text-xs">Sign In</div>
+    <div className='flex items-center gap-4 justify-end m-2'>
+      <div className='text-xs'>Sign In</div>
     </div>
   )
 }

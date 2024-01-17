@@ -10,7 +10,7 @@ import { usePaceStore } from '@/lib/store'
 
 export default function Home() {
   const [session, setSession] = useState<Session | null>(null)
-  const { user, setUser } = usePaceStore((state) => ({
+  const { user, setUser } = usePaceStore(state => ({
     user: state.user,
     setUser: state.setUser,
   }))
@@ -25,7 +25,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="flex w-full h-screen flex-col gap-4 items-center justify-center">
+    <div className='flex w-full h-screen flex-col gap-4 items-center justify-center'>
       {session ? <TaskList /> : <SignIn />}
       <Toaster />
     </div>

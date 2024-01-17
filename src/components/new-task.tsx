@@ -24,7 +24,7 @@ const newTaskSchema = z.object({
 })
 
 export default function NewTask() {
-  const { user } = usePaceStore((state) => ({ user: state.user }))
+  const { user } = usePaceStore(state => ({ user: state.user }))
 
   const newTaskForm = useForm<z.infer<typeof newTaskSchema>>({
     resolver: zodResolver(newTaskSchema),
@@ -50,13 +50,13 @@ export default function NewTask() {
     return (
       <FormField
         control={newTaskForm.control}
-        name="status"
+        name='status'
         render={({ field }) => (
           <FormItem>
             <FormControl>
               <Input
                 {...field}
-                type="hidden"
+                type='hidden'
                 value={newTaskForm.getValues('status') || ''}
               />
             </FormControl>
@@ -72,11 +72,15 @@ export default function NewTask() {
     return (
       <FormField
         control={newTaskForm.control}
-        name="user_id"
+        name='user_id'
         render={({ field }) => (
           <FormItem>
             <FormControl>
-              <Input {...field} type="hidden" value={user.id} />
+              <Input
+                {...field}
+                type='hidden'
+                value={user.id}
+              />
             </FormControl>
           </FormItem>
         )}
@@ -96,19 +100,23 @@ export default function NewTask() {
   }, [user])
 
   return (
-    <div className="fixed bottom-0 w-1/2">
+    <div className='fixed bottom-0 w-1/2'>
       <Form {...newTaskForm}>
         <form
           onSubmit={newTaskForm.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4"
+          className='flex flex-col gap-4'
         >
           <FormField
             control={newTaskForm.control}
-            name="title"
+            name='title'
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input {...field} type="text" placeholder="New task..." />
+                  <Input
+                    {...field}
+                    type='text'
+                    placeholder='New task...'
+                  />
                 </FormControl>
                 <FormMessage>
                   {newTaskForm.formState.errors.title?.message}
@@ -120,8 +128,8 @@ export default function NewTask() {
           {renderHiddenUserIdField()}
           {/* TODO: Float button inside form */}
           <Button
-            type="submit"
-            className="absolute right-0"
+            type='submit'
+            className='absolute right-0'
             disabled={!user}
             variant={'ghost'}
           >

@@ -70,11 +70,11 @@ export const CountdownTimer = () => {
     'w-10 dark:bg-black text-center border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400'
 
   return (
-    <div className="flex flex-col">
+    <div className='flex flex-col'>
       <div>
         {`${addLeadingZeros(timeLeft.hours)} : ${addLeadingZeros(timeLeft.minutes)} : ${addLeadingZeros(timeLeft.seconds)}`}
       </div>
-      <div className="flex gap-4">
+      <div className='flex gap-4'>
         <button onClick={start}>Start</button>
         <button onClick={pause}>Pause</button>
         <button onClick={stop}>Stop</button>
