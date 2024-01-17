@@ -60,12 +60,12 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "areas_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: 'areas_user_id_fkey'
+            columns: ['user_id']
             isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
         ]
       }
       areas_headings: {
@@ -83,19 +83,19 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "areas_headings_area_id_fkey"
-            columns: ["area_id"]
+            foreignKeyName: 'areas_headings_area_id_fkey'
+            columns: ['area_id']
             isOneToOne: false
-            referencedRelation: "areas"
-            referencedColumns: ["id"]
+            referencedRelation: 'areas'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "areas_headings_heading_id_fkey"
-            columns: ["heading_id"]
+            foreignKeyName: 'areas_headings_heading_id_fkey'
+            columns: ['heading_id']
             isOneToOne: false
-            referencedRelation: "headings"
-            referencedColumns: ["id"]
-          }
+            referencedRelation: 'headings'
+            referencedColumns: ['id']
+          },
         ]
       }
       headings: {
@@ -122,12 +122,12 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "headings_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: 'headings_user_id_fkey'
+            columns: ['user_id']
             isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
         ]
       }
       profiles: {
@@ -151,12 +151,12 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "profiles_id_fkey"
-            columns: ["id"]
+            foreignKeyName: 'profiles_id_fkey'
+            columns: ['id']
             isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
         ]
       }
       tasks: {
@@ -166,7 +166,7 @@ export interface Database {
           duration: number | null
           id: string
           notes: string | null
-          status: Database["public"]["Enums"]["status"]
+          status: Database['public']['Enums']['status']
           title: string
           updated_at: string | null
           user_id: string
@@ -177,7 +177,7 @@ export interface Database {
           duration?: number | null
           id?: string
           notes?: string | null
-          status?: Database["public"]["Enums"]["status"]
+          status?: Database['public']['Enums']['status']
           title: string
           updated_at?: string | null
           user_id: string
@@ -188,19 +188,19 @@ export interface Database {
           duration?: number | null
           id?: string
           notes?: string | null
-          status?: Database["public"]["Enums"]["status"]
+          status?: Database['public']['Enums']['status']
           title?: string
           updated_at?: string | null
           user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "tasks_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: 'tasks_user_id_fkey'
+            columns: ['user_id']
             isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
         ]
       }
       tasks_areas: {
@@ -218,19 +218,19 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "tasks_areas_area_id_fkey"
-            columns: ["area_id"]
+            foreignKeyName: 'tasks_areas_area_id_fkey'
+            columns: ['area_id']
             isOneToOne: false
-            referencedRelation: "areas"
-            referencedColumns: ["id"]
+            referencedRelation: 'areas'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "tasks_areas_task_id_fkey"
-            columns: ["task_id"]
+            foreignKeyName: 'tasks_areas_task_id_fkey'
+            columns: ['task_id']
             isOneToOne: false
-            referencedRelation: "tasks"
-            referencedColumns: ["id"]
-          }
+            referencedRelation: 'tasks'
+            referencedColumns: ['id']
+          },
         ]
       }
       tasks_headings: {
@@ -248,19 +248,19 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "tasks_headings_heading_id_fkey"
-            columns: ["heading_id"]
+            foreignKeyName: 'tasks_headings_heading_id_fkey'
+            columns: ['heading_id']
             isOneToOne: false
-            referencedRelation: "headings"
-            referencedColumns: ["id"]
+            referencedRelation: 'headings'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "tasks_headings_task_id_fkey"
-            columns: ["task_id"]
+            foreignKeyName: 'tasks_headings_task_id_fkey'
+            columns: ['task_id']
             isOneToOne: false
-            referencedRelation: "tasks"
-            referencedColumns: ["id"]
-          }
+            referencedRelation: 'tasks'
+            referencedColumns: ['id']
+          },
         ]
       }
     }
@@ -271,7 +271,7 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      status: "todo" | "doing" | "done"
+      status: 'todo' | 'doing' | 'done'
     }
     CompositeTypes: {
       [_ in never]: never
@@ -381,12 +381,12 @@ export interface Database {
         }
         Relationships: [
           {
-            foreignKeyName: "objects_bucketId_fkey"
-            columns: ["bucket_id"]
+            foreignKeyName: 'objects_bucketId_fkey'
+            columns: ['bucket_id']
             isOneToOne: false
-            referencedRelation: "buckets"
-            referencedColumns: ["id"]
-          }
+            referencedRelation: 'buckets'
+            referencedColumns: ['id']
+          },
         ]
       }
     }
@@ -460,112 +460,116 @@ export interface Database {
 
 export type Tables<
   PublicTableNameOrOptions extends
-    | keyof (Database["public"]["Tables"] & Database["public"]["Views"])
+    | keyof (Database['public']['Tables'] & Database['public']['Views'])
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-        Database[PublicTableNameOrOptions["schema"]]["Views"])
-    : never = never
+    ? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+        Database[PublicTableNameOrOptions['schema']]['Views'])
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+  ? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+      Database[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
       Row: infer R
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (Database["public"]["Tables"] &
-      Database["public"]["Views"])
-  ? (Database["public"]["Tables"] &
-      Database["public"]["Views"])[PublicTableNameOrOptions] extends {
-      Row: infer R
-    }
-    ? R
+  : PublicTableNameOrOptions extends keyof (Database['public']['Tables'] &
+        Database['public']['Views'])
+    ? (Database['public']['Tables'] &
+        Database['public']['Views'])[PublicTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
     : never
-  : never
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
+    | keyof Database['public']['Tables']
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
       Insert: infer I
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Insert: infer I
-    }
-    ? I
+  : PublicTableNameOrOptions extends keyof Database['public']['Tables']
+    ? Database['public']['Tables'][PublicTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
     : never
-  : never
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
+    | keyof Database['public']['Tables']
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
       Update: infer U
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Update: infer U
-    }
-    ? U
+  : PublicTableNameOrOptions extends keyof Database['public']['Tables']
+    ? Database['public']['Tables'][PublicTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
     : never
-  : never
 
 export type Enums<
   PublicEnumNameOrOptions extends
-    | keyof Database["public"]["Enums"]
+    | keyof Database['public']['Enums']
     | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
-    : never = never
+    ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
+    : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
-  ? Database["public"]["Enums"][PublicEnumNameOrOptions]
-  : never
-
-
+  ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
+  : PublicEnumNameOrOptions extends keyof Database['public']['Enums']
+    ? Database['public']['Enums'][PublicEnumNameOrOptions]
+    : never
 
 // Table Types
 
-export type Area = Database['public']['Tables']['areas']['Row'];
-export type AreaHeading = Database['public']['Tables']['areas_headings']['Row'];
-export type Heading = Database['public']['Tables']['headings']['Row'];
-export type Profile = Database['public']['Tables']['profiles']['Row'];
-export type Task = Database['public']['Tables']['tasks']['Row'];
-export type TaskArea = Database['public']['Tables']['tasks_areas']['Row'];
-export type TaskHeading = Database['public']['Tables']['tasks_headings']['Row'];
+export type Area = Database['public']['Tables']['areas']['Row']
+export type AreaHeading = Database['public']['Tables']['areas_headings']['Row']
+export type Heading = Database['public']['Tables']['headings']['Row']
+export type Profile = Database['public']['Tables']['profiles']['Row']
+export type Task = Database['public']['Tables']['tasks']['Row']
+export type TaskArea = Database['public']['Tables']['tasks_areas']['Row']
+export type TaskHeading = Database['public']['Tables']['tasks_headings']['Row']
 
 // Insert Types
 
-export type AreaInsert = Database['public']['Tables']['areas']['Insert'];
-export type AreaHeadingInsert = Database['public']['Tables']['areas_headings']['Insert'];
-export type HeadingInsert = Database['public']['Tables']['headings']['Insert'];
-export type ProfileInsert = Database['public']['Tables']['profiles']['Insert'];
-export type TaskInsert = Database['public']['Tables']['tasks']['Insert'];
-export type TaskAreaInsert = Database['public']['Tables']['tasks_areas']['Insert'];
-export type TaskHeadingInsert = Database['public']['Tables']['tasks_headings']['Insert'];
+export type AreaInsert = Database['public']['Tables']['areas']['Insert']
+export type AreaHeadingInsert =
+  Database['public']['Tables']['areas_headings']['Insert']
+export type HeadingInsert = Database['public']['Tables']['headings']['Insert']
+export type ProfileInsert = Database['public']['Tables']['profiles']['Insert']
+export type TaskInsert = Database['public']['Tables']['tasks']['Insert']
+export type TaskAreaInsert =
+  Database['public']['Tables']['tasks_areas']['Insert']
+export type TaskHeadingInsert =
+  Database['public']['Tables']['tasks_headings']['Insert']
 
 // Update Types
 
-export type AreaUpdate = Database['public']['Tables']['areas']['Update'];
-export type AreaHeadingUpdate = Database['public']['Tables']['areas_headings']['Update'];
-export type HeadingUpdate = Database['public']['Tables']['headings']['Update'];
-export type ProfileUpdate = Database['public']['Tables']['profiles']['Update'];
-export type TaskUpdate = Database['public']['Tables']['tasks']['Update'];
-export type TaskAreaUpdate = Database['public']['Tables']['tasks_areas']['Update'];
-export type TaskHeadingUpdate = Database['public']['Tables']['tasks_headings']['Update'];
+export type AreaUpdate = Database['public']['Tables']['areas']['Update']
+export type AreaHeadingUpdate =
+  Database['public']['Tables']['areas_headings']['Update']
+export type HeadingUpdate = Database['public']['Tables']['headings']['Update']
+export type ProfileUpdate = Database['public']['Tables']['profiles']['Update']
+export type TaskUpdate = Database['public']['Tables']['tasks']['Update']
+export type TaskAreaUpdate =
+  Database['public']['Tables']['tasks_areas']['Update']
+export type TaskHeadingUpdate =
+  Database['public']['Tables']['tasks_headings']['Update']

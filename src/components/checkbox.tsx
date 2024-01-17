@@ -1,6 +1,12 @@
 import { Square, XSquare, MinusSquare, CheckSquare } from 'react-feather'
 
-export default function Checkbox({taskStatus, toggleCompleted}: {taskStatus: string, toggleCompleted: () => void}) {
+export default function Checkbox({
+  taskStatus,
+  toggleCompleted,
+}: {
+  taskStatus: string
+  toggleCompleted: () => void
+}) {
   switch (taskStatus) {
     case 'todo':
       return <Square onClick={toggleCompleted} />
@@ -13,5 +19,4 @@ export default function Checkbox({taskStatus, toggleCompleted}: {taskStatus: str
     default:
       return <Square onClick={toggleCompleted} />
   }
-
 }

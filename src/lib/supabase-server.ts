@@ -1,11 +1,11 @@
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
+import { createServerClient } from '@supabase/ssr'
+import { cookies } from 'next/headers'
 
-let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-let supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+let supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-if (process.env.NODE_ENV === "development") {
-  supabaseUrl = "http://127.0.0.1:54321";
+if (process.env.NODE_ENV === 'development') {
+  supabaseUrl = 'http://127.0.0.1:54321'
 }
 
 export const supabaseServerClient = createServerClient(
@@ -14,8 +14,8 @@ export const supabaseServerClient = createServerClient(
   {
     cookies: {
       get(name: string) {
-        return cookies().get(name)?.value;
+        return cookies().get(name)?.value
       },
     },
-  }
-);
+  },
+)

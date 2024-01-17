@@ -14,30 +14,29 @@
 - [ ] Zen Mode fullscreen timer view
 - [ ] Drag tasks in and out of "stack" (stack = list of tasks to be completed)
 
-
-``` ts
+```ts
 interface Task {
-  id: string;
-  name: string;
-  description: string;
-  estimated_time: number;
-  completed: boolean;
-  routine_id: string;
-  routine_order: number;
-  completed_at: Date;
-  created_at: Date;
-  updated_at: Date;
+  id: string
+  name: string
+  description: string
+  estimated_time: number
+  completed: boolean
+  routine_id: string
+  routine_order: number
+  completed_at: Date
+  created_at: Date
+  updated_at: Date
 }
 ```
 
-``` ts
+```ts
 interface Completion {
-  id: string;
-  task_id: string;
-  started_at: Date;
-  stopped_at: Date;
-  task_completed: boolean;
-  duration: number;
+  id: string
+  task_id: string
+  started_at: Date
+  stopped_at: Date
+  task_completed: boolean
+  duration: number
 }
 ```
 
