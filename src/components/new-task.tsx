@@ -24,7 +24,10 @@ const newTaskSchema = z.object({
 })
 
 export default function NewTask() {
-  const { user, setTasks } = usePaceStore(state => ({ user: state.user, setTasks: state.setTasks }))
+  const { user, setTasks } = usePaceStore(state => ({
+    user: state.user,
+    setTasks: state.setTasks,
+  }))
 
   const newTaskForm = useForm<z.infer<typeof newTaskSchema>>({
     resolver: zodResolver(newTaskSchema),
