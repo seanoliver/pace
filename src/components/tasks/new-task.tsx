@@ -13,7 +13,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { usePaceStore } from '@/lib/store'
-import { Button } from './ui/button'
+import { Button } from '../ui/button'
 import { useEffect } from 'react'
 import { PlusCircle } from 'react-feather'
 

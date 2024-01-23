@@ -2,8 +2,8 @@ import useTaskActions from '@/lib/hooks/use-task-actions'
 import { Task } from '@/lib/types'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import DisplayTask from './display-task'
-import EditTask from './edit-task'
+import DisplayTask from '../tasks/display-task'
+import EditTask from '../tasks/edit-task'
 
 export default function SortableItem({ task, id }: { task: Task; id: string }) {
   const { attributes, listeners, setNodeRef, transform, transition } =

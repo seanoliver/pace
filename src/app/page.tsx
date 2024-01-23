@@ -1,6 +1,6 @@
 'use client'
 
-import TaskList from '@/components/task-list'
+import TaskList from '@/components/task-list/task-list'
 import { Toaster } from '@/components/ui/toaster'
 import { supabaseBrowserClient } from '@/lib/supabase-browser'
 import { Session } from '@supabase/supabase-js'
